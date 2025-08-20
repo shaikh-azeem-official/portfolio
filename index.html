@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Portfolio</title>
+  <meta name="description" content="Modern developer portfolio with advanced UI, projects, and contact." />
+  <meta property="og:title" content="My Portfolio" />
+  <meta property="og:description" content="A clean, modern, advanced developer portfolio." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <style>
+    :root{
+      --bg: #0b0f17;
+      --bg-soft: rgba(255,255,255,0.06);
+      --text: #e8eefc;
+      --muted: #a9b3c7;
+      --accent: #7aa2ff;
+      --accent-2:#6ef3a5;
+      --glass: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --blur: 16px;
+    }
+   
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; 
+      font-family:system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      color:#e8eefc; 
+      background:radial-gradient(1200px 600px at 10% -10%, rgba(122,162,255,.15), transparent 60%),
+      radial-gradient(900px 600px at 100% 0%, rgba(70, 29, 29, 0.12), transparent 50%), #0b0f17;
+      line-height:1.6; overflow-x:hidden;
+    }
+
+    /* --- Intro Splash --- */
+    #intro{
+      position:fixed; 
+      inset:0; 
+      display:grid; 
+      place-items:center; 
+      z-index:9999;
+      background:linear-gradient(180deg,  #0d4d66, #9fbfc5), #0b0f17  ;
+      transition:opacity .6s ease, visibility .6s ease; 
+    }
+    #intro.hidden{
+      opacity:0; 
+      visibility:hidden;
+    }
+    .intro-box{
+      padding:40px 32px;  
+      text-align:center;
+    }
+    .intro-title{
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight:800; 
+      letter-spacing:.5px;
+      display:inline-block; 
+      white-space:nowrap; 
+      animation:type 2.2s steps(24,end), caret 1s step-end infinite;
+      padding-right:8px;
+    }
+    @keyframes type {from{width:0} to{width:100%}} 
+    @keyframes caret {50%{border-color:transparent}}
+
+    .intro-actions{margin-top:18px}
+    .btn{
+      padding:10px 16px; 
+      border-radius:999px; 
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.06); 
+      color:#e8eefc; 
+      cursor:pointer; 
+      font-weight:600;
+      transition:transform .15s ease, background .2s ease;
+      backdrop-filter: blur(10px);
+    }
+    .btn:hover{
+      transform:translateY(-1px); 
+      background:rgba(247, 0, 0, 0.18)
+    }
+    
+    /* --- Navbar --- */
+ header{
+  position: fixed; 
+  top: 100;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  background:linear-gradient(180deg, rgba(0,0,0,.15), transparent);
+  border-bottom:1px solid rgba(255,255,255,0.12);
+}
+
+    
+  
+    .logo{
+      font-weight:800; 
+      font-size: 165%;
+      letter-spacing:.5px; 
+      display:flex; 
+      align-items:center; 
+      gap:10px;
+      position: absolute;
+      top: 5px;
+      left: 40px;
+    }
+    .logo .dot{
+      width:30px; 
+      height:30px; 
+      border-radius:50%; 
+      background:#7aa2ff; 
+      animation:pulse 2s infinite;
+      position: absolute;
+      left: -35px;
+      top:6px;
+      
+    }
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+    .logo .type{
+      border-right:2px solid #7aa2ff; 
+      white-space:nowrap; 
+      overflow:hidden;
+    }
+    
+
+    /* --- Sections --- */
+    section{
+      max-width:1200px; 
+      margin:0 auto; 
+      padding:72px 20px
+    }
+    .hero{
+      display:grid; 
+      grid-template-columns:1.3fr .7fr; 
+      align-items:center; 
+      gap:28px;
+    }
+    @media 
+    (max-width:900px)
+    {.hero{grid-template-columns:1fr}}
+
+    .glass{
+      background:rgba(255,255,255,0.08); 
+      backdrop-filter: blur(16px);
+      border:1px solid rgba(255,255,255,0.12); 
+      border-radius:16px; 
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      
+    }
+    .kicker{
+      color:#a9b3c7; 
+      font-weight:700; 
+      letter-spacing:.12em; 
+      text-transform:uppercase
+    }
+    .title{
+      font-size:clamp(36px, 8vw, 64px); 
+      line-height:1.1; 
+      margin:8px 0 12px; 
+      font-weight:900;
+    }
+    .subtitle{
+      color:#a9b3c7; 
+      font-size:clamp(16px, 2.6vw, 20px)}
+    .hero-cta{
+      margin-top:18px; 
+      display:flex; 
+      gap:10px; 
+      flex-wrap:wrap}
+    .chip{
+      display:inline-flex; 
+      align-items:center; 
+      gap:8px; 
+      padding:8px 12px; 
+      border-radius:999px; 
+      border:1px solid rgba(255,255,255,0.12); 
+      background:rgba(255,255,255,0.06)}
+    .icon{
+      zfont-style:normal;
+    }
+
+    /* Stats */
+    .stats{
+      display:grid; 
+      grid-template-columns:repeat(3,1fr); 
+      gap:16px; 
+      margin-top:16px;
+    }
+    @media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+    .stat{
+      padding:18px; 
+      text-align:center;
+    }
+    .stat h3{
+      margin:0; 
+      font-size:28px;
+    }
+    .stat p{
+      margin:6px 0 0; 
+      color:#a9b3c7;
+    }
+
+    /* Skills */
+    .grid{
+      display:grid; 
+      grid-template-columns:repeat(12,1fr); 
+      gap:16px;
+    }
+    .col-4{grid-column:span 4} .col-8{grid-column:span 8}
+    @media (max-width:900px){.col-4,.col-8{grid-column:1 / -1}}
+    .skill-chips{
+      display:flex; 
+      flex-wrap:wrap; 
+      gap:10px;
+    }
+    .skill-chips .chip{
+      font-weight:600;
+    }
+
+    /* Projects */
+    .filters{
+      display:flex; 
+      gap:10 px; 
+      flex-wrap:wrap; 
+      margin-bottom:14px;
+    }
+    .card{
+      padding:18px; 
+      position:relative; 
+      overflow:hidden;
+    }
+    .project-grid{
+      display:grid; 
+      grid-template-columns:repeat(3,1fr); 
+      gap:16px
+    }
+    @media (max-width:1000px){.project-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:650px){.project-grid{grid-template-columns:1fr}}
+    .project .thumb{
+      aspect-ratio:16/10; 
+      border-radius:12px; 
+      overflow:hidden; 
+      border:1px solid rgba(255,255,255,0.12);
+      background:linear-gradient(135deg, rgba(122,162,255,.25), rgba(110,243,165,.2));
+      display:flex; 
+      place-items:center; 
+      font-weight:800; 
+      letter-spacing:.08em;
+    }
+    .project h4{
+      margin:12px 0 6px;
+    }
+    .project .meta{
+      color:#a9b3c7; 
+      font-size:14px
+    }
+    .project .btns{
+      display:flex; 
+      gap:10px; 
+      margin-top:10px; 
+      flex-wrap:wrap;
+    }
+
+    /* Timeline */
+    .timeline{
+      position:relative; 
+      padding-left:26px;
+    }
+    .timeline::before{
+      content:""; 
+    position:absolute; 
+    left:10px; 
+    top:0; 
+    bottom:0; 
+    width:2px; 
+    background:linear-gradient(135deg, #7aa2ff, #6ef3a5);}
+    .tl-item{
+      position:relative; 
+      margin:18px 0; 
+      padding-left:12px;
+    }
+    .tl-item::before{
+      content:""; 
+      position:absolute; 
+      left:-2px; 
+      top:8px; 
+      width:10px; 
+      height:10px; 
+      border-radius:50%; 
+      background:#7aa2ff; 
+      box-shadow:0 0 0 3px rgba(122,162,255,.2)}
+
+    /* Contact */
+    form{
+      display:grid; 
+      gap:10px
+    }
+    input, textarea{
+      padding:12px 14px; 
+      border-radius:12px; 
+      border:1px solid rgba(255,255,255,0.12); 
+      background: rgba(0,0,0,0.04); 
+      color:#e8eefc;
+    }
+    input:focus, textarea:focus{
+      outline:2px solid rgba(122,162,255,.3); 
+      border-color:transparent
+    }
+    .footer{
+      padding:28px 20px; 
+      text-align:center; 
+      color:#a9b3c7;
+    }
+
+    /* Reveal Animations */
+    .reveal{
+      opacity:0;
+      transform:translateY(16px); 
+      transition:opacity .6s ease, transform .6s ease
+    }
+    .reveal.visible{
+      opacity:1; 
+      transform:none;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{
+      animation:none !important; 
+      transition:none !important}
+    }
+
+
+
+
+
+     @media (max-width: 768px) {
+  .nav-menu {
+     position: fixed;
+  top: 100px;
+  right: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  transition: right 0.4s ease;
+  z-index: 1000;
+  }
+
+  .nav-menu.show {
+    right: 0;
+  }
+
+  .nav-menu a {
+    font-size: 20px;
+    padding: 10px 0;
+  }
+
+  .hamburger {
+    right: 20px;
+    top: 200px;
+    z-index: 1001;
+  }
+}
+
+
+    .hamburger {
+      position: fixed;
+      top: 30px;
+      right: 20px;
+      width: 35px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background: #44b8c7;
+      border-radius: 3px;
+      transition: 0.4s;
+    }
+
+    .hamburger.active span {
+  background-color: #00ffbf; /* blue on active */
+}
+
+    
+
+    .nav-menu {
+  position: fixed;
+  top: 20px;
+  right: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: right 0.4s ease;
+  z-index: 1000;
+}
+
+
+    .nav-menu.show {
+      right: 100px;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-menu a:hover {
+      color: #00ffd5;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(10px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-10px);
+    }
+  </style>
+  <!-- Lottie (optional) -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+</head>
+<body>
+
+  <!-- Intro Splash: FIRST PAGE ONLY TEXT -->
+  <div id="intro" role="dialog" aria-label="Intro">
+    <div class="intro-box glass">
+      <div class="intro-title">Welcome to my portfolio</div>
+      <div class="intro-actions">
+        <button class="btn" id="enterBtn" aria-label="Enter">Enter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Navbar -->
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="type" id="logoType" font-size>_ myPortfolio</span>
+      </div>
+      
+        <!-- Hamburger Button -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Nav Links -->
+  <div class="nav-menu" id="navMenu">
+    <a href="#home">Home</a>
+    <a href="#Projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+     
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div>
+      <div class="kicker">Hi, I'm <span style="color:var(--accent)">Mr. Shazen</span></div>
+      <h1 class="title">Creative <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); 
+      -webkit-background-clip:text; 
+      color:transparent;">Developer</span> crafting delightful web experiences.</h1>
+      <p class="subtitle">I build fast, accessible, and elegant products with a focus on performance and UX.</p>
+
+      <div class="hero-cta">
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn" href="#contact">Contact Me</a>
+        <span class="chip"><i class="icon">⚡</i>Fast & Optimized</span>
+        <span class="chip"><i class="icon">🔒</i>Secure</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat glass reveal"><h3>3+</h3><p>Years Experience</p></div>
+        <div class="stat glass reveal"><h3>25+</h3><p>Projects</p></div>
+        <div class="stat glass reveal"><h3>10+</h3><p>Happy Clients</p></div>
+      </div>
+    </div>
+
+    <div class="glass reveal" style="padding:18px;">
+      <lottie-player
+        src="https://assets7.lottiefiles.com/packages/lf20_jcikwtux.json"
+        background="transparent" speed="1" loop autoplay aria-label="Developer animation">
+      </lottie-player>
+    </div>
+  </section>
+
+  <!-- About & Skills -->
+  <section id="about" class="reveal">
+    <div class="grid">
+      <div class="col-4">
+        <div class="card glass">
+          <div style="padding:18px;">
+            <div class="kicker">About</div>
+            <h2 style="margin:8px 0 10px">I Am Shaikh Azeem</h2>
+            <p>I’m a frontend-first full‑stack developer focusing on React, Node, and design systems. I love building clean, usable interfaces and scalable components.</p>
+            <div class="skill-chips" style="margin-top:12px">
+              <span class="chip">Accessibility</span>
+              <span class="chip">Performance</span>
+              <span class="chip">Animations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="card glass">
+          <div style="padding:18px;">
+            <div class="kicker">Tech Stack</div>
+            <h2 style="margin:8px 0 10px">Skills I use daily</h2>
+            <div class="skill-chips">
+              <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span>
+              <span class="chip">React</span><span class="chip">Next.js</span><span class="chip">Node.js</span>
+              <span class="chip">Express</span><span class="chip">MongoDB</span>
+              <span class="chip">TypeScript</span><span class="chip">GSAP</span><span class="chip">Figma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="kicker">Work</div>
+    <h2 class="title" style="font-size: clamp(28px, 6vw, 42px); margin-bottom:6px;">Projects</h2>
+    <p class="subtitle">A few selected projects — filter by category.</p>
+
+    <div class="filters">
+      <button class="btn filter active" data-filter="all">All</button>
+      <button class="btn filter" data-filter="web">Web</button>
+      <button class="btn filter" data-filter="app">App</button>
+      <button class="btn filter" data-filter="design">Design</button>
+    </div>
+
+    <div class="project-grid">
+      <div class="project card glass reveal" data-cat="web">
+        <div class="thumb">Landing Page Engine</div>
+        <h4>High‑conversion Landing Builder</h4>
+        <div class="meta">React · Tailwind · A/B testing</div>
+        <div class="btns">
+          <a class="btn" href="#" target="_blank" rel="noopener">Live</a>
+          <a class="btn" href="#" target="_blank" rel="noopener">Code</a>
+        </div>
+      </div>
+
+      <div class="project card glass reveal" data-cat="app">
+        <div class="thumb">Task Manager</div>
+        <h4>Realtime Collab Tasks</h4>
+        <div class="meta">Next.js · Socket.io · Prisma</div>
+        <div class="btns">
+          <a class="btn" href="#">Live</a>
+          <a class="btn" href="#">Code</a>
+        </div>
+      </div>
+
+      <div class="project card glass reveal" data-cat="design">
+        <div class="thumb">Design System</div>
+        <h4>Design System + UI Kit</h4>
+        <div class="meta">Figma · Tokens · Storybook</div>
+        <div class="btns">
+          <a class="btn" href="#">Case Study</a>
+        </div>
+      </div>
+
+      <div class="project card glass reveal" data-cat="web">
+        <div class="thumb">E‑Commerce</div>
+        <h4>Headless Storefront</h4>
+        <div class="meta">Next.js · Stripe · CMS</div>
+        <div class="btns">
+          <a class="btn" href="#">Live</a>
+          <a class="btn" href="#">Code</a>
+        </div>
+      </div>
+
+      <div class="project card glass reveal" data-cat="app">
+        <div class="thumb">Finance App</div>
+        <h4>Personal Finance Dashboard</h4>
+        <div class="meta">React Native · Charts</div>
+        <div class="btns">
+          <a class="btn" href="#">Live</a>
+          <a class="btn" href="#">Code</a>
+        </div>
+      </div>
+
+      <div class="project card glass reveal" data-cat="web">
+        <div class="thumb">Analytics</div>
+        <h4>Privacy‑first Analytics</h4>
+        <div class="meta">Node · Clickhouse</div>
+        <div class="btns">
+          <a class="btn" href="#">Live</a>
+          <a class="btn" href="#">Code</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="reveal">
+    <div class="kicker">Journey</div>
+    <h2 style="margin:8px 0 10px">Experience</h2>
+    <div class="timeline glass" style="padding:18px;">
+      <div class="tl-item">
+        <h4>Frontend Developer — ABC Studio</h4>
+        <div class="meta">2023 — Present · Remote</div>
+        <p>Shipped high‑impact landing pages and design system components used across products.</p>
+      </div>
+      <div class="tl-item">
+        <h4>Web Developer — Freelance</h4>
+        <div class="meta">2021 — 2023</div>
+        <p>Delivered 20+ client websites focusing on performance and SEO.</p>
+      </div>
+      <div class="tl-item">
+        <h4>Intern — UI Engineer</h4>
+        <div class="meta">2020 — 2021</div>
+        <p>Built internal tools and dashboards with React.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="reveal">
+    <div class="kicker">Get in touch</div>
+    <h2 style="margin:8px 0 10px">Contact</h2>
+    <div class="grid">
+      <div class="col-8">
+        <div class="card glass" style="padding:18px;">
+         <form id="contactForm">
+  <input type="text" placeholder="Your name" required>
+  <input type="email" placeholder="Email address" required>
+  <textarea rows="5" placeholder="Message"></textarea>
+  <button class="btn" type="submit">Send Message</button>
+</form>
+
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card glass" style="padding:18px;">
+          <div class="kicker">Social</div>
+          <p><a href="#" class="btn">GitHub</a></p>
+          <p><a href="#" class="btn">LinkedIn</a></p>
+          <p><a href="#" class="btn">Twitter</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">© <span id="year"></span> Mr. Shazen — Built with ♥</div>
+
+  <script>
+
+//nav bar 
+ const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('show');
+    });
+
+    // --- Intro Splash logic ---
+    const intro = document.getElementById('intro');
+    const enterBtn = document.getElementById('enterBtn');
+    const hideIntro = () => intro.classList.add('hidden');
+    enterBtn.addEventListener('click', hideIntro);
+    // Auto-hide after 2000ms
+    setTimeout(hideIntro, 2000);
+
+    // --- Logo typing loop ---
+    const logoType = document.getElementById('logoType');
+    const logoTexts = ["_ myPortfolio", "_ building experiences", "_ writing clean code"];
+    let li=0;
+    function typeLoop(){
+      const t = logoTexts[li % logoTexts.length];
+      let i=0; logoType.textContent = "";
+      const timer = setInterval(()=>{
+        logoType.textContent = t.slice(0, ++i);
+        if(i === t.length) { clearInterval(timer); setTimeout(()=>{li++; typeLoop();}, 1200); }
+      }, 60);
+    }
+    typeLoop();
+    
+    // --- Reveal on scroll ---
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    // Also hero stats
+    document.querySelectorAll('.stat').forEach(el=>observer.observe(el));
+
+    // --- Project Filters ---
+    const filters = document.querySelectorAll('.filter');
+    const items = document.querySelectorAll('.project');
+    filters.forEach(f=>{
+      f.addEventListener('click', ()=>{
+        filters.forEach(x=>x.classList.remove('active'));
+        f.classList.add('active');
+        const cat = f.dataset.filter;
+        items.forEach(it=>{
+          const show = cat === 'all' || it.dataset.cat === cat;
+          it.style.display = show ? 'block' : 'none';
+        });
+      });
+    });
+
+    // --- Year update ---
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Smooth scroll for nav ---
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').substring(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+//Whatsapp
+
+document.querySelector("#contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  
+  let name = this.querySelector('input[type="text"]').value.trim();
+  let email = this.querySelector('input[type="email"]').value.trim();
+  let msg = this.querySelector('textarea').value.trim();
+
+  let phone = "917058204462"; // Tumhara WhatsApp number
+  
+  // Message format
+  let text = `Name: ${name}%0AEmail: ${email}%0AMessage: ${msg}`;
+  
+  // WhatsApp API link
+  let url = `https://api.whatsapp.com/send/?phone=${phone}&text=${text}&type=phone_number&app_absent=0`;
+
+  // Open WhatsApp chat
+  window.open(url, "_blank");
+});
+
+
+
+  </script>
+</body>
+</html>
