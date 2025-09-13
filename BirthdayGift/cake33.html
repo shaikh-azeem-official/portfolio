@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Cake</title>
+  <style>
+    html,
+    body{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: pink;
+      font-family: 'Showcard Gothic', cursive;
+      overflow: hidden;
+    }
+
+    .stage {
+      pointer-events: none;
+      position: relative;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 7vw;
+      margin-bottom: 50px;
+      color: #000;
+    }
+
+    svg {
+      width: 300px;
+      height: auto;
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #ff69b4);
+      animation: floatUp 8s linear infinite;
+      opacity: 0.8;
+      z-index: -1;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(0.8); opacity: 0; }
+    }
+
+    /* Flames */
+     /* .flame {
+      position: absolute;
+      top: -18px;
+      left: 2px;
+      width: 10px;
+      height: 18px;
+      background: radial-gradient(ellipse at center, yellow 0%, orange 60%, transparent 100%);
+      border-radius: 50% 50% 50% 50%;
+      animation: flicker 0.2s infinite alternate;
+    } */
+
+    @keyframes flicker {
+      0% { transform: scale(1,1); opacity: 1; }
+      100% { transform: scale(1.2,0.9); opacity: 0.8; }
+    }
+    /* Confetti */
+    /* .confetti {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      animation: rise 1.5s forwards;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+    } */
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      animation: flyUp 1s forwards;
+    }
+
+    @keyframes flyUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-150px) scale(0.5); opacity: 0; }
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      width: 60vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      font-size: 1.5em;
+      text-align: center;
+      transition: transform 0.5s ease;
+      z-index: 999999999999999;
+    }
+    .popup.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Candle */
+    .candle {
+      left: 50%;
+      position: absolute;
+      bottom: 55px;
+      width: 14px;
+      height: 40px;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Flame */
+    .flame {
+      position: absolute;
+      top: -18px;
+      left: 2px;
+      width: 10px;
+      height: 18px;
+      background: radial-gradient(ellipse at center, yellow 0%, orange 60%, transparent 100%);
+      border-radius: 50% 50% 50% 50%;
+      animation: flicker 0.2s infinite alternate;
+    }
+    
+    .cake-candles {
+      position: absolute;
+      width: 220px;
+      left: 50%;
+      transform: translateX(-33%);
+      top: 50%;
+    }
+
+    .full-screen{
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 9;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.363);
+      display: none;
+    }
+
+    .full-screen.show{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="cake-candles">
+    <div class="candle" style="left:30px;"><div class="flame"></div></div>
+    <div class="candle" style="left:55px;"><div class="flame"></div></div>
+    <div class="candle" style="left:80px;"><div class="flame"></div></div>
+    <div class="candle" style="left:105px;"><div class="flame"></div></div>
+  </div>
+
+  <div class="stage">
+    <div class="title">🎉 HAPPY BIRTHDAY! 🎉</div>
+    <!-- Cake SVG -->
+    <svg id="cake" viewBox="0 0 200 200">
+      <!-- Bottom tier -->
+      <ellipse cx="100" cy="160" rx="80" ry="20" fill="#e75480"/>
+      <rect x="20" y="100" width="160" height="60" fill="#ff99cc" rx="20" ry="20"/>
+      <ellipse cx="100" cy="100" rx="80" ry="20" fill="#ff99cc"/>
+      <!-- Middle tier -->
+      <ellipse cx="100" cy="100" rx="60" ry="15" fill="#ff6680"/>
+      <rect x="40" y="60" width="120" height="40" fill="#ffb6c1" rx="15" ry="15"/>
+      <ellipse cx="100" cy="60" rx="60" ry="15" fill="#ffb6c1"/>
+      <!-- Top tier -->
+      <ellipse cx="100" cy="60" rx="40" ry="10" fill="#ff99cc"/>
+      <rect x="60" y="30" width="80" height="30" fill="#ff80aa" rx="10" ry="10"/>
+      <ellipse cx="100" cy="30" rx="40" ry="10" fill="#ff80aa"/>
+      <!-- Candles -->
+      <!-- <g id="candles">
+        <g class="candle" transform="translate(80,10)">
+          <rect width="8" height="20" fill="green"/>
+          <polygon class="flame" points="4,-8 0,0 8,0" fill="orange"/>
+        </g>
+        <g class="candle" transform="translate(92,10)">
+          <rect width="8" height="20" fill="blue"/>
+          <polygon class="flame" points="4,-8 0,0 8,0" fill="orange"/>
+        </g>
+        <g class="candle" transform="translate(104,10)">
+          <rect width="8" height="20" fill="yellow"/>
+          <polygon class="flame" points="4,-8 0,0 8,0" fill="orange"/>
+        </g>
+        <g class="candle" transform="translate(116,10)">
+          <rect width="8" height="20" fill="red"/>
+          <polygon class="flame" points="4,-8 0,0 8,0" fill="orange"/>
+        </g>
+      </g> -->
+    </svg>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">🎉 Happy Birthday! All candles are blown out 🎉</div>
+  <div class="full-screen"></div>
+  <script>
+    const candles = document.querySelectorAll('.candle');
+    const notifyBox = document.getElementById('notifyBox');
+    let blownCount = 0;
+
+    // Candle logic
+    const flames = document.querySelectorAll(".flame");
+    flames.forEach(flame => {
+      flame.addEventListener("click", (e) => {
+        flame.style.display = "none"; // flame off
+        spawnConfetti(e.clientX, e.clientY);
+      });
+    });
+
+    candles.forEach(candle => {
+      candle.addEventListener('click', (e) => {
+        let flame = candle.querySelector('.flame');
+        if (flame) {
+          flame.remove(); // remove fire
+          blownCount++;
+
+          // create confetti
+          for (let i = 0; i < 10; i++) {
+            let conf = document.createElement('div');
+            conf.classList.add('confetti');
+            conf.style.left = candle.offsetLeft + 10 + 'px';
+            conf.style.top = (candle.offsetTop - 20) + 'px';
+            conf.style.background = Math.random() > 0.5 ? "🎉" : getRandomColor();
+            conf.style.backgroundColor = getRandomColor();
+            document.body.appendChild(conf);
+
+            setTimeout(() => conf.remove(), 1000);
+          }
+
+          // all candles blown?
+          if (blownCount === candles.length) {
+            document.querySelector(".popup").classList.add("show");
+            document.querySelector(".full-screen").classList.add("show");
+          }
+        }
+      });
+    });
+
+    function getRandomColor() {
+      const colors = ["#ff4d4d", "#4dff4d", "#4da6ff", "#ffff4d", "#ff66cc"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    document.querySelector(".full-screen").addEventListener("click", () => {
+      document.querySelector(".popup").classList.remove("show");
+            document.querySelector(".full-screen").classList.remove("show");
+    });
+
+    // Balloons generator
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.classList.add("balloon");
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.background = `hsl(${Math.random()*360},70%,60%)`;
+      balloon.style.animationDuration = 6 + Math.random()*4 + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 10000);
+    }
+    setInterval(createBalloon, 100);
+
+    // Candle logic
+    // const flames = document.querySelectorAll(".flame");
+    // let blownOut = 0;
+
+    // flames.forEach(flame => {
+    //   flame.addEventListener("click", (e) => {
+    //     flame.style.display = "none"; // flame off
+    //     spawnConfetti(e.clientX, e.clientY);
+    //     blownOut++;
+    //     if(blownOut === flames.length){
+    //       document.getElementById("popup").classList.add("show");
+    //     }
+    //   });
+    // });
+
+    // Confetti effect
+    function spawnConfetti(x, y){
+      for(let i=0;i<15;i++){
+        const conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left = x + (Math.random()*40-20) + "px";
+        conf.style.top = y + "px";
+        conf.style.background = `hsl(${Math.random()*360},70%,60%)`;
+        conf.style.animationDuration = (1+Math.random())+"s";
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),1500);
+      }
+    }
+  </script>
+</body>
+</html>
