@@ -172,6 +172,11 @@
   </style>
 </head>
 <body>
+
+  <audio id="birthdayMusic" loop>
+        <source src="cake.mp3" type="audio/mpeg">
+    </audio>
+
   <div class="cake-candles">
     <div class="candle" style="left:30px;"><div class="flame"></div></div>
     <div class="candle" style="left:55px;"><div class="flame"></div></div>
@@ -230,9 +235,17 @@
  🎉</div>
   <div class="full-screen"></div>
   <script>
+
+      // Azeem Audio play hone ka code yaha likh raha hun main.
+    document.body.addEventListener("click", () => {
+      document.querySelector("#birthdayMusic").play();
+    });
+
     const candles = document.querySelectorAll('.candle');
     const notifyBox = document.getElementById('notifyBox');
     let blownCount = 0;
+
+   
 
     // Candle logic
     const flames = document.querySelectorAll(".flame");
