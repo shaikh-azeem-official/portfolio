@@ -294,7 +294,7 @@
         azeemPhotoContainer.addEventListener('click', () => {
             currentPhotoIndex = (currentPhotoIndex + 1) % azeemPhotos.length;
             azeemPhoto.src = azeemPhotos[currentPhotoIndex];
-            showMessageBox('Click', 'MSG');
+            showMessageBox('Miss Shaista', '✨ A little late, but my wishes are forever true — Happy Belated Birthday to you 🎉');
         });
 
         // Fireworks Logic
@@ -409,7 +409,7 @@
         giftBox.addEventListener('click', () => {
             giftBox.classList.toggle('open');
             if (giftBox.classList.contains('open')) {
-                showMessageBox('Hello', 'Hi');
+                showMessageBox('surprise wish', 'I wasn’t late… I just gave you an extended birthday edition! 🎁🎂');
                 triggerMultipleFireworks(); // Launch fireworks when gift opens
             } else {
                 showMessageBox('Click', 'Click again to read the message!');
