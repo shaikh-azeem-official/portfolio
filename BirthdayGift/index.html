@@ -211,7 +211,7 @@
 
         <!-- First photo yaha pe dalna hai persone ki -->
         <div class="w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 rounded-full overflow-hidden border-4 sm:border-6 md:border-8 border-yellow-400 shadow-xl transform transition-transform duration-300 hover:scale-110 cursor-pointer" id="azeemPhotoContainer">
-            <img id="azeemPhoto" src="4.jpg" alt="BirthdayPersone class="w-full h-full object-cover">
+            <img id="azeemPhoto" src="sadu.png" alt="BirthdayPersone class="w-full h-full object-cover">
         </div>
         <p class="text-sm sm:text-base text-gray-700 text-center mt-2">Click on your photo for a surprise!</p>
         <div class="flex flex-col items-center space-y-3 mt-5 sm:mt-6">
@@ -285,16 +285,16 @@
         const azeemPhotoContainer = document.getElementById('azeemPhotoContainer');
         const azeemPhoto = document.getElementById('azeemPhoto');
         const azeemPhotos = [
-            "4.jpg",
-            "6done.jpg",
-            "2.jpg",
+            "sadu.jpg",
+            "sadu2.jpg",
+            "sadu3.jpg",
         ];
         let currentPhotoIndex = 0;
 
         azeemPhotoContainer.addEventListener('click', () => {
             currentPhotoIndex = (currentPhotoIndex + 1) % azeemPhotos.length;
             azeemPhoto.src = azeemPhotos[currentPhotoIndex];
-            showMessageBox('Miss Shaista', '✨ A little late, but my wishes are forever true — Happy Belated Birthday to you 🎉');
+            showMessageBox('Miss Sadiya', '✨ A little late, but my wishes are forever true — Happy Belated Birthday to you 🎉');
         });
 
         // Fireworks Logic
